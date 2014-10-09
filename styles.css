@@ -1,0 +1,15 @@
+
+#mod_NEWMODULE_playercontainer {
+	text-align: center; 
+	margin-top: 1em; 
+	background: #F4C63f;
+	width: 640px;
+	height: 600px;
+}
+#mod_NEWMODULE_resultscontainer {
+	text-align: center; 
+	margin-top: 1em; 
+	background: #A4C63f;
+	width: 640px;
+	height: 420px;
+}
