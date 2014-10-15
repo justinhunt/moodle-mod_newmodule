@@ -43,3 +43,5 @@ $string['someadminsetting_details'] = 'More info about Some Admin Setting';
 $string['someinstancesetting'] = 'Some Instance Setting';
 $string['someinstancesetting_details'] = 'More infor about Some Instance Setting';
 $string['NEWMODULEsettings'] = 'NEWMODULE settings';
+$string['NEWMODULE:addinstance'] = 'Add a new NEWMODULE';
+$string['NEWMODULE:view'] = 'View NEWMODULE';
