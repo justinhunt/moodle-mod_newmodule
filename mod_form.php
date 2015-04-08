@@ -29,6 +29,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot.'/mod/NEWMODULE/lib.php');
 
 /**
  * Module instance settings form
@@ -47,7 +48,7 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field
-        $mform->addElement('text', 'name', get_string('NEWMODULEname', 'NEWMODULE'), array('size'=>'64'));
+        $mform->addElement('text', 'name', get_string('NEWMODULEname', MOD_NEWMODULE_LANG), array('size'=>'64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -55,7 +56,7 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
         }
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->addHelpButton('name', 'NEWMODULEname', 'NEWMODULE');
+        $mform->addHelpButton('name', 'NEWMODULEname', MOD_NEWMODULE_LANG);
 
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
@@ -63,10 +64,23 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
         //-------------------------------------------------------------------------------
         // Adding the rest of NEWMODULE settings, spreeading all them into this fieldset
         // or adding more fieldsets ('header' elements) if needed for better logic
-        $mform->addElement('static', 'label1', 'NEWMODULEsettings', get_string('NEWMODULEsettings', 'NEWMODULE'));
-        $mform->addElement('text', 'someinstancesetting', get_string('someinstancesetting', 'NEWMODULE'), array('size'=>'64'));
+        $mform->addElement('static', 'label1', 'NEWMODULEsettings', get_string('NEWMODULEsettings', MOD_NEWMODULE_LANG));
+        $mform->addElement('text', 'someinstancesetting', get_string('someinstancesetting', MOD_NEWMODULE_LANG), array('size'=>'64'));
         $mform->addRule('someinstancesetting', null, 'required', null, 'client');
         $mform->setType('someinstancesetting', PARAM_TEXT);
+		
+		//attempts
+        $attemptoptions = array(0 => get_string('unlimited', MOD_NEWMODULE_LANG),
+                            1 => '1',2 => '2',3 => '3',4 => '4',5 => '5',);
+        $mform->addElement('select', 'maxattempts', get_string('maxattempts', MOD_NEWMODULE_LANG), $attemptoptions);
+        
+        //grade options
+        $gradeoptions = array(MOD_NEWMODULE_GRADEHIGHEST => get_string('gradehighest',MOD_NEWMODULE_LANG),
+                            MOD_NEWMODULE_GRADELOWEST => get_string('gradelowest', MOD_NEWMODULE_LANG),
+                            MOD_NEWMODULE_GRADELATEST => get_string('gradelatest', MOD_NEWMODULE_LANG),
+                            MOD_NEWMODULE_GRADEAVERAGE => get_string('gradeaverage', MOD_NEWMODULE_LANG),
+							MOD_NEWMODULE_GRADENONE => get_string('gradenone', MOD_NEWMODULE_LANG));
+        $mform->addElement('select', 'gradeoptions', get_string('gradeoptions', MOD_NEWMODULE_LANG), $gradeoptions);
 
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
@@ -75,4 +89,27 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
         // add standard buttons, common to all modules
         $this->add_action_buttons();
     }
+	
+	
+    /**
+     * This adds completion rules
+	 * The values here are just dummies. They don't work in this project until you implement some sort of grading
+	 * See lib.php NEWMODULE_get_completion_state()
+     */
+	 function add_completion_rules() {
+		$mform =& $this->_form;  
+		$config = get_config(MOD_NEWMODULE_FRANKY);
+    
+		//timer options
+        //Add a place to set a mimumum time after which the activity is recorded complete
+       $mform->addElement('static', 'mingradedetails', '',get_string('mingradedetails', MOD_NEWMODULE_LANG));
+       $options= array(0=>get_string('none'),20=>'20%',30=>'30%',40=>'40%',50=>'50%',60=>'60%',70=>'70%',80=>'80%',90=>'90%',100=>'40%');
+       $mform->addElement('select', 'mingrade', get_string('mingrade', MOD_NEWMODULE_LANG), $options);	   
+	   
+		return array('mingrade');
+	}
+	
+	function completion_rule_enabled($data) {
+		return ($data['mingrade']>0);
+	}
 }

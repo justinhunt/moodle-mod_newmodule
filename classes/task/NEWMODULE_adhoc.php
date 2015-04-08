@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -16,22 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * NEWMODULE module admin settings and defaults
+ * The mod_page course module viewed event.
  *
- * @package    mod
- * @subpackage NEWMODULE
+ * @package    mod_NEWMODULE
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-require_once($CFG->dirroot.'/mod/NEWMODULE/lib.php');
+namespace mod_NEWMODULE\event;
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/mod/NEWMODULE/lib.php');
 
-if ($ADMIN->fulltree) {
-
-
-
-	  $settings->add(new admin_setting_configtext('mod_NEWMODULE/someadminsetting',
-        get_string('someadminsetting', 'NEWMODULE'), get_string('someadminsetting_details', MOD_NEWMODULE_LANG), 'default text', PARAM_TEXT));
-
+/**
+ * The mod_NEWMODULE course module viewed event class.
+ *
+ * @package    mod_NEWMODULE
+ * @since      Moodle 2.7
+ * @copyright  COPYRIGHTNOTICE
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class NEWMODULE_adhoc extends \core\task\adhoc_task {
+                                                                     
+   	 /**
+     *  Run the tasks
+     */
+	 public function execute(){
+		$trace = new \text_progress_trace();
+		$cd =  $this->get_custom_data();;
+		//$trace->output($cd->somedata)
+        $NEWMODULE->mod_NEWMODULE_dotask($trace);
+	}
+		
 }
+

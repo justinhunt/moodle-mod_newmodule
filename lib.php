@@ -31,8 +31,20 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/** example constant */
-//define('NEWMODULE_ULTIMATE_ANSWER', 42);
+define('MOD_NEWMODULE_FRANKY','mod_newmodule');
+define('MOD_NEWMODULE_LANG','mod_newmodule');
+define('MOD_NEWMODULE_TABLE','newmodule');
+define('MOD_NEWMODULE_USERTABLE','newmodule_attempt');
+define('MOD_NEWMODULE_MODNAME','newmodule');
+define('MOD_NEWMODULE_URL','/mod/newmodule');
+define('MOD_NEWMODULE_CLASS','mod_newmodule');
+
+define('MOD_NEWMODULE_GRADEHIGHEST', 0);
+define('MOD_NEWMODULE_GRADELOWEST', 1);
+define('MOD_NEWMODULE_GRADELATEST', 2);
+define('MOD_NEWMODULE_GRADEAVERAGE', 3);
+define('MOD_NEWMODULE_GRADENONE', 4);
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Moodle core API                                                            //
@@ -49,9 +61,316 @@ function NEWMODULE_supports($feature) {
     switch($feature) {
         case FEATURE_MOD_INTRO:         return true;
         case FEATURE_SHOW_DESCRIPTION:  return true;
-
+		case FEATURE_COMPLETION_HAS_RULES: return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS: return true;
+        case FEATURE_GRADE_HAS_GRADE:         return true;
+        case FEATURE_GRADE_OUTCOMES:          return true;
+        case FEATURE_BACKUP_MOODLE2:          return true;
         default:                        return null;
     }
+}
+
+/**
+ * Implementation of the function for printing the form elements that control
+ * whether the course reset functionality affects the englishcentral.
+ *
+ * @param $mform form passed by reference
+ */
+function NEWMODULE_reset_course_form_definition(&$mform) {
+    $mform->addElement('header', MOD_NEWMODULE_NAME . 'header', get_string('modulenameplural', MOD_NEWMODULE_LANG));
+    $mform->addElement('advcheckbox', 'reset_' . MOD_NEWMODULE_NAME , get_string('deletealluserdata',MOD_NEWMODULE_LANG));
+}
+
+/**
+ * Course reset form defaults.
+ * @param object $course
+ * @return array
+ */
+function NEWMODULE_reset_course_form_defaults($course) {
+    return array('reset_' . MOD_NEWMODULE_NAME =>1);
+}
+
+/**
+ * Removes all grades from gradebook
+ *
+ * @global stdClass
+ * @global object
+ * @param int $courseid
+ * @param string optional type
+ */
+function NEWMODULE_reset_gradebook($courseid, $type='') {
+    global $CFG, $DB;
+
+    $sql = "SELECT l.*, cm.idnumber as cmidnumber, l.course as courseid
+              FROM {" . MOD_NEWMODULE_TABLE . "} l, {course_modules} cm, {modules} m
+             WHERE m.name='" . MOD_NEWMODULE_NAME . "' AND m.id=cm.module AND cm.instance=l.id AND l.course=:course";
+    $params = array ("course" => $courseid);
+    if ($moduleinstances = $DB->get_records_sql($sql,$params)) {
+        foreach ($moduleinstances as $moduleinstance) {
+            NEWMODULE_grade_item_update($moduleinstance, 'reset');
+        }
+    }
+}
+
+/**
+ * Actual implementation of the reset course functionality, delete all the
+ * NEWMODULE attempts for course $data->courseid.
+ *
+ * @global stdClass
+ * @global object
+ * @param object $data the data submitted from the reset course.
+ * @return array status array
+ */
+function NEWMODULE_reset_userdata($data) {
+    global $CFG, $DB;
+
+    $componentstr = get_string('modulenameplural', MOD_NEWMODULE_LANG);
+    $status = array();
+
+    if (!empty($data->{'reset_' . MOD_NEWMODULE_NAME})) {
+        $sql = "SELECT l.id
+                         FROM {".MOD_NEWMODULE_TABLE."} l
+                        WHERE l.course=:course";
+
+        $params = array ("course" => $data->courseid);
+        $DB->delete_records_select(MOD_NEWMODULE_USERTABLE, MOD_NEWMODULE_NAME . "id IN ($sql)", $params);
+
+        // remove all grades from gradebook
+        if (empty($data->reset_gradebook_grades)) {
+            englishcentral_reset_gradebook($data->courseid);
+        }
+
+        $status[] = array('component'=>$componentstr, 'item'=>get_string('deletealluserdata', MOD_NEWMODULE_LANG), 'error'=>false);
+    }
+
+    /// updating dates - shift may be negative too
+    if ($data->timeshift) {
+        shift_course_mod_dates(MOD_NEWMODULE_NAME, array('available', 'deadline'), $data->timeshift, $data->courseid);
+        $status[] = array('component'=>$componentstr, 'item'=>get_string('datechanged'), 'error'=>false);
+    }
+
+    return $status;
+}
+
+
+
+
+/**
+ * Create grade item for activity instance
+ *
+ * @category grade
+ * @uses GRADE_TYPE_VALUE
+ * @uses GRADE_TYPE_NONE
+ * @param object $moduleinstance object with extra cmidnumber
+ * @param array|object $grades optional array/object of grade(s); 'reset' means reset grades in gradebook
+ * @return int 0 if ok, error code otherwise
+ */
+function NEWMODULE_grade_item_update($moduleinstance, $grades=null) {
+    global $CFG;
+    if (!function_exists('grade_update')) { //workaround for buggy PHP versions
+        require_once($CFG->libdir.'/gradelib.php');
+    }
+
+    if (array_key_exists('cmidnumber', $moduleinstance)) { //it may not be always present
+        $params = array('itemname'=>$moduleinstance->name, 'idnumber'=>$moduleinstance->cmidnumber);
+    } else {
+        $params = array('itemname'=>$moduleinstance->name);
+    }
+
+    if ($moduleinstance->grade > 0) {
+        $params['gradetype']  = GRADE_TYPE_VALUE;
+        $params['grademax']   = $moduleinstance->grade;
+        $params['grademin']   = 0;
+    } else if ($moduleinstance->grade < 0) {
+        $params['gradetype']  = GRADE_TYPE_SCALE;
+        $params['scaleid']   = -$moduleinstance->grade;
+
+        // Make sure current grade fetched correctly from $grades
+        $currentgrade = null;
+        if (!empty($grades)) {
+            if (is_array($grades)) {
+                $currentgrade = reset($grades);
+            } else {
+                $currentgrade = $grades;
+            }
+        }
+
+        // When converting a score to a scale, use scale's grade maximum to calculate it.
+        if (!empty($currentgrade) && $currentgrade->rawgrade !== null) {
+            $grade = grade_get_grades($moduleinstance->course, 'mod', MOD_NEWMODULE_NAME, $moduleinstance->id, $currentgrade->userid);
+            $params['grademax']   = reset($grade->items)->grademax;
+        }
+    } else {
+        $params['gradetype']  = GRADE_TYPE_NONE;
+    }
+
+    if ($grades  === 'reset') {
+        $params['reset'] = true;
+        $grades = null;
+    } else if (!empty($grades)) {
+        // Need to calculate raw grade (Note: $grades has many forms)
+        if (is_object($grades)) {
+            $grades = array($grades->userid => $grades);
+        } else if (array_key_exists('userid', $grades)) {
+            $grades = array($grades['userid'] => $grades);
+        }
+        foreach ($grades as $key => $grade) {
+            if (!is_array($grade)) {
+                $grades[$key] = $grade = (array) $grade;
+            }
+            //check raw grade isnt null otherwise we insert a grade of 0
+            if ($grade['rawgrade'] !== null) {
+                $grades[$key]['rawgrade'] = ($grade['rawgrade'] * $params['grademax'] / 100);
+            } else {
+                //setting rawgrade to null just in case user is deleting a grade
+                $grades[$key]['rawgrade'] = null;
+            }
+        }
+    }
+
+
+    return grade_update('mod/' . MOD_NEWMODULE_NAME, $moduleinstance->course, 'mod', MOD_NEWMODULE_NAME, $moduleinstance->id, 0, $grades, $params);
+}
+
+/**
+ * Update grades in central gradebook
+ *
+ * @category grade
+ * @param object $moduleinstance
+ * @param int $userid specific user only, 0 means all
+ * @param bool $nullifnone
+ */
+function NEWMODULE_update_grades($moduleinstance, $userid=0, $nullifnone=true) {
+    global $CFG, $DB;
+    require_once($CFG->libdir.'/gradelib.php');
+
+    if ($moduleinstance->grade == 0) {
+        NEWMODULE_grade_item_update($moduleinstance);
+
+    } else if ($grades = NEWMODULE_get_user_grades($moduleinstance, $userid)) {
+        NEWMODULE_grade_item_update($moduleinstance, $grades);
+
+    } else if ($userid and $nullifnone) {
+        $grade = new stdClass();
+        $grade->userid   = $userid;
+        $grade->rawgrade = null;
+        NEWMODULE_grade_item_update($moduleinstance, $grade);
+
+    } else {
+        NEWMODULE_grade_item_update($moduleinstance);
+    }
+	
+	//echo "updategrades" . $userid;
+}
+
+/**
+ * Return grade for given user or all users.
+ *
+ * @global stdClass
+ * @global object
+ * @param int $moduleinstance
+ * @param int $userid optional user id, 0 means all users
+ * @return array array of grades, false if none
+ */
+function NEWMODULE_get_user_grades($moduleinstance, $userid=0) {
+    global $CFG, $DB;
+
+    $params = array("moduleid" => $moduleinstance->id);
+
+    if (!empty($userid)) {
+        $params["userid"] = $userid;
+        $user = "AND u.id = :userid";
+    }
+    else {
+        $user="";
+
+    }
+
+	$idfield = 'a.' . MOD_NEWMODULE_NAME . 'id';
+    if ($moduleinstance->maxattempts==1 || $moduleinstance->gradeoptions == MOD_ENGLISHCENTRAL_GRADELATEST) {
+
+        $sql = "SELECT u.id, u.id AS userid, a.sessionscore AS rawgrade
+                  FROM {user} u,  {". MOD_NEWMODULE_USERTABLE ."} a
+                 WHERE u.id = a.userid AND $idfield = :moduleid
+                       AND a.status = 1
+                       $user";
+	
+	}else{
+		switch($moduleinstance->gradeoptions){
+			case MOD_NEWMODULE_GRADEHIGHEST:
+				$sql = "SELECT u.id, u.id AS userid, MAX( a.sessionscore  ) AS rawgrade
+                      FROM {user} u, {". MOD_NEWMODULE_USERTABLE ."} a
+                     WHERE u.id = a.userid AND $idfield = :moduleid
+                           $user
+                  GROUP BY u.id";
+				  break;
+			case MOD_NEWMODULE_GRADELOWEST:
+				$sql = "SELECT u.id, u.id AS userid, MIN(  a.sessionscore  ) AS rawgrade
+                      FROM {user} u, {". MOD_NEWMODULE_USERTABLE ."} a
+                     WHERE u.id = a.userid AND $idfield = :moduleid
+                           $user
+                  GROUP BY u.id";
+				  break;
+			case MOD_NEWMODULE_GRADEAVERAGE:
+            $sql = "SELECT u.id, u.id AS userid, AVG( a.sessionscore  ) AS rawgrade
+                      FROM {user} u, {". MOD_NEWMODULE_USERTABLE ."} a
+                     WHERE u.id = a.userid AND $idfield = :moduleid
+                           $user
+                  GROUP BY u.id";
+				  break;
+
+        }
+
+    } 
+
+    return $DB->get_records_sql($sql, $params);
+}
+
+
+function NEWMODULE_get_completion_state($course,$cm,$userid,$type) {
+	return NEWMODULE_is_complete($course,$cm,$userid,$type);
+}
+
+
+//this is called internally only 
+function NEWMODULE_is_complete($course,$cm,$userid,$type) {
+	 global $CFG,$DB;
+	 
+	  global $CFG,$DB;
+
+	// Get module object
+    if(!($moduleinstance=$DB->get_record(MOD_NEWMODULE_TABLE,array('id'=>$cm->instance)))) {
+        throw new Exception("Can't find module with cmid: {$cm->instance}");
+    }
+	$idfield = 'a.' . MOD_NEWMODULE_NAME . 'id'
+	$params = array('moduleid'=>$moduleinstance->id, 'userid'=>$userid);
+	$sql = "SELECT  MAX( sessionscore  ) AS grade
+                      FROM {". MOD_NEWMODULE_USERTABLE ."}
+                     WHERE userid = :userid AND " . MOD_NEWMODULE_NAME . "id = :moduleid";
+	$result = $DB->get_field_sql($sql, $params);
+	if($result===false){return false;}
+	 
+	//check completion reqs against satisfied conditions
+	switch ($type){
+		case COMPLETION_AND:
+			$success = $result >= $moduleinstance->mingrade;
+			break;
+		case COMPLETION_OR:
+			$success = $result >= $moduleinstance->mingrade;
+	}
+	//return our success flag
+	return $success;
+}
+
+
+/**
+ * A task called from scheduled or adhoc
+ *
+ * @param progress_trace trace object
+ *
+ */
+function NEWMODULE_dotask(progress_trace $trace) {
+    $trace->output('executing dotask');
 }
 
 /**
@@ -73,7 +392,7 @@ function NEWMODULE_add_instance(stdClass $NEWMODULE, mod_NEWMODULE_mod_form $mfo
 
     # You may have to add extra stuff in here #
 
-    return $DB->insert_record('NEWMODULE', $NEWMODULE);
+    return $DB->insert_record(MOD_NEWMODULE_TABLE, $NEWMODULE);
 }
 
 /**
@@ -95,7 +414,7 @@ function NEWMODULE_update_instance(stdClass $NEWMODULE, mod_NEWMODULE_mod_form $
 
     # You may have to add extra stuff in here #
 
-    return $DB->update_record('NEWMODULE', $NEWMODULE);
+    return $DB->update_record(MOD_NEWMODULE_TABLE, $NEWMODULE);
 }
 
 /**
@@ -111,13 +430,13 @@ function NEWMODULE_update_instance(stdClass $NEWMODULE, mod_NEWMODULE_mod_form $
 function NEWMODULE_delete_instance($id) {
     global $DB;
 
-    if (! $NEWMODULE = $DB->get_record('NEWMODULE', array('id' => $id))) {
+    if (! $NEWMODULE = $DB->get_record(MOD_NEWMODULE_TABLE, array('id' => $id))) {
         return false;
     }
 
     # Delete any dependent records here #
 
-    $DB->delete_records('NEWMODULE', array('id' => $NEWMODULE->id));
+    $DB->delete_records(MOD_NEWMODULE_TABLE, array('id' => $NEWMODULE->id));
 
     return true;
 }
@@ -231,7 +550,7 @@ function NEWMODULE_scale_used($NEWMODULEid, $scaleid) {
     global $DB;
 
     /** @example */
-    if ($scaleid and $DB->record_exists('NEWMODULE', array('id' => $NEWMODULEid, 'grade' => -$scaleid))) {
+    if ($scaleid and $DB->record_exists(MOD_NEWMODULE_TABLE, array('id' => $NEWMODULEid, 'grade' => -$scaleid))) {
         return true;
     } else {
         return false;
@@ -250,7 +569,7 @@ function NEWMODULE_scale_used_anywhere($scaleid) {
     global $DB;
 
     /** @example */
-    if ($scaleid and $DB->record_exists('NEWMODULE', array('grade' => -$scaleid))) {
+    if ($scaleid and $DB->record_exists(MOD_NEWMODULE_TABLE, array('grade' => -$scaleid))) {
         return true;
     } else {
         return false;

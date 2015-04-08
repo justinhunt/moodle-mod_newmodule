@@ -51,10 +51,31 @@ $capabilities = array(
 
 	'mod/NEWMODULE:addinstance' => array(
 			'riskbitmask' => RISK_XSS,
-	
 			'captype' => 'write',
 			'contextlevel' => CONTEXT_COURSE,
 			'archetypes' => array(
+					'editingteacher' => CAP_ALLOW,
+					'manager' => CAP_ALLOW
+			),
+			'clonepermissionsfrom' => 'moodle/course:manageactivities'
+	),
+	
+	'mod/NEWMODULE:manage' => array(
+			'riskbitmask' => RISK_XSS,
+			'captype' => 'write',
+			'contextlevel' => CONTEXT_COURSE,
+			'archetypes' => array(
+					'editingteacher' => CAP_ALLOW,
+					'manager' => CAP_ALLOW
+			),
+			'clonepermissionsfrom' => 'moodle/course:manageactivities'
+	),
+	
+	'mod/NEWMODULE:preview' => array(
+			'captype' => 'write',
+			'contextlevel' => CONTEXT_COURSE,
+			'archetypes' => array(
+					'teacher' => CAP_ALLOW,
 					'editingteacher' => CAP_ALLOW,
 					'manager' => CAP_ALLOW
 			),

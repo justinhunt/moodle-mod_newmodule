@@ -67,12 +67,12 @@ if ($course->format == 'weeks') {
 foreach ($NEWMODULEs as $NEWMODULE) {
     if (!$NEWMODULE->visible) {
         $link = html_writer::link(
-            new moodle_url('/mod/NEWMODULE.php', array('id' => $NEWMODULE->coursemodule)),
+            new moodle_url('/mod/NEWMODULE/view.php', array('id' => $NEWMODULE->coursemodule)),
             format_string($NEWMODULE->name, true),
             array('class' => 'dimmed'));
     } else {
         $link = html_writer::link(
-            new moodle_url('/mod/NEWMODULE.php', array('id' => $NEWMODULE->coursemodule)),
+            new moodle_url('/mod/NEWMODULE/view.php', array('id' => $NEWMODULE->coursemodule)),
             format_string($NEWMODULE->name, true));
     }
 

@@ -37,11 +37,11 @@ $n  = optional_param('n', 0, PARAM_INT);  // NEWMODULE instance ID - it should b
 if ($id) {
     $cm         = get_coursemodule_from_id('NEWMODULE', $id, 0, false, MUST_EXIST);
     $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $NEWMODULE  = $DB->get_record('NEWMODULE', array('id' => $cm->instance), '*', MUST_EXIST);
+    $moduleinstance  = $DB->get_record('NEWMODULE', array('id' => $cm->instance), '*', MUST_EXIST);
 } elseif ($n) {
-    $NEWMODULE  = $DB->get_record('NEWMODULE', array('id' => $n), '*', MUST_EXIST);
-    $course     = $DB->get_record('course', array('id' => $NEWMODULE->course), '*', MUST_EXIST);
-    $cm         = get_coursemodule_from_instance('NEWMODULE', $NEWMODULE->id, $course->id, false, MUST_EXIST);
+    $moduleinstance  = $DB->get_record('NEWMODULE', array('id' => $n), '*', MUST_EXIST);
+    $course     = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
+    $cm         = get_coursemodule_from_instance('NEWMODULE', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
     error('You must specify a course_module ID or an instance ID');
 }
@@ -51,33 +51,44 @@ $modulecontext = context_module::instance($cm->id);
 
 //Diverge logging logic at Moodle 2.7
 if($CFG->version<2014051200){
-	add_to_log($course->id, 'NEWMODULE', 'view', "view.php?id={$cm->id}", $NEWMODULE->name, $cm->id);
+	add_to_log($course->id, 'NEWMODULE', 'view', "view.php?id={$cm->id}", $moduleinstance->name, $cm->id);
 }else{
 	// Trigger module viewed event.
 	$event = \mod_NEWMODULE\event\course_module_viewed::create(array(
-	   'objectid' => $NEWMODULE->id,
+	   'objectid' => $moduleinstance->id,
 	   'context' => $modulecontext
 	));
 	$event->add_record_snapshot('course_modules', $cm);
 	$event->add_record_snapshot('course', $course);
-	$event->add_record_snapshot('NEWMODULE', $NEWMODULE);
+	$event->add_record_snapshot('NEWMODULE', $moduleinstance);
 	$event->trigger();
 } 
+
+//if we got this far, we can consider the activity "viewed"
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
+
+//are we a teacher or a student?
+if(has_capability('mod/NEWMODULE:preview',$modulecontext)){
+	$mode = "preview";
+}else{
+	$mode= "view";
+}
 
 
 /// Set up the page header
 $PAGE->set_url('/mod/NEWMODULE/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string($NEWMODULE->name));
+$PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
 $PAGE->set_pagelayout('course');
 
 	//Get an admin settings 
-	$config = get_config('mod_NEWMODULE');
+	$config = get_config(MOD_NEWMODULE_FRANKY);
   	$someadminsetting = $config->someadminsetting;
 
 	//Get an instance setting
-	$someinstancesetting = $NEWMODULE->someinstancesetting;
+	$someinstancesetting = $moduleinstance->someinstancesetting;
 
 
 //get our javascript all ready to go
@@ -107,8 +118,24 @@ $renderer = $PAGE->get_renderer('mod_NEWMODULE');
 
 //From here we actually display the page.
 //this is core renderer stuff
-echo $renderer->header();
-echo $renderer->show_intro($NEWMODULE,$cm);
+
+
+//if we are teacher we see tabs. If student we just see the quiz
+if($mode=='preview'){
+	echo $renderer->header($moduleinstance, $cm, $mode, null, get_string('view', MOD_NEWMODULE_LANG));
+}else{
+	echo $renderer->notabsheader();
+}
+
+echo $renderer->show_intro($moduleinstance,$cm);
+
+//if we have too many attempts, lets report that.
+if($moduleinstance->maxattempts == 0|| ){
+	$attempts =  $DB->get_records(MOD_NEWMODULE_USERTABLE,array('userid'=>$USER->id, MOD_NEWMODULE_NAME.'id'=>$moduleinstance->id));
+	if($attempts && count($attempts)<$moduleinstance->maxattempts){
+		echo get_string("exceededattempts",MOD_NEWMODULE_LANG,$moduleinstance->maxattempts);
+	}
+}
 
 //This is specfic to our renderer
 echo $renderer->show_something($someadminsetting);
