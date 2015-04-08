@@ -18,7 +18,7 @@
 /**
  * Defines {@link backup_englishcentral_activity_task} class
  *
- * @package     mod_NEWMODULE
+ * @package     mod_@@newmodule@@
  * @category    backup
  * @copyright   COPYRIGHTNOTICE
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,12 +26,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/NEWMODULE/backup/moodle2/backup_NEWMODULE_stepslib.php');
+require_once($CFG->dirroot . '/mod/@@newmodule@@/backup/moodle2/backup_@@newmodule@@_stepslib.php');
 
 /**
  * Provides all the settings and steps to perform one complete backup of englishcentral activity
  */
-class backup_NEWMODULE_activity_task extends backup_activity_task {
+class backup_@@newmodule@@_activity_task extends backup_activity_task {
 
     /**
      * No specific settings for this activity
@@ -43,7 +43,7 @@ class backup_NEWMODULE_activity_task extends backup_activity_task {
      * Defines a backup step to store the instance data in the englishcentral.xml file
      */
     protected function define_my_steps() {
-        $this->add_step(new backup_NEWMODULE_activity_structure_step('NEWMODULE_structure', 'NEWMODULE.xml'));
+        $this->add_step(new backup_@@newmodule@@_activity_structure_step('@@newmodule@@_structure', '@@newmodule@@.xml'));
     }
 
     /**
@@ -58,12 +58,12 @@ class backup_NEWMODULE_activity_task extends backup_activity_task {
         $base = preg_quote($CFG->wwwroot,"/");
 
         // Link to the list of modules
-        $search = "/(" . $base . "\/mod\/NEWMODULE\/index.php\?id\=)([0-9]+)/";
+        $search = "/(" . $base . "\/mod\/@@newmodule@@\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@ENGLISHCENTRALINDEX*$2@$', $content);
 
         //Link to view.pphp by moduleid
-        $search = "/(" . $base . "\/mod\/NEWMODULE\/view.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@NEWMODULEVIEWBYID*$2@$', $content);
+        $search = "/(" . $base . "\/mod\/@@newmodule@@\/view.php\?id\=)([0-9]+)/";
+        $content= preg_replace($search, '$@@@newmodule@@VIEWBYID*$2@$', $content);
 
         return $content;
     }

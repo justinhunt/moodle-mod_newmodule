@@ -17,24 +17,24 @@
 /**
  * The mod_page course module viewed event.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_NEWMODULE\event;
+namespace mod_@@newmodule@@\event;
 defined('MOODLE_INTERNAL') || die();
-require_once($CFG->dirroot . '/mod/NEWMODULE/lib.php');
+require_once($CFG->dirroot . '/mod/@@newmodule@@/lib.php');
 
 /**
- * The mod_NEWMODULE course module viewed event class.
+ * The mod_@@newmodule@@ course module viewed event class.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @since      Moodle 2.7
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class NEWMODULE_adhoc extends \core\task\adhoc_task {
+class @@newmodule@@_adhoc extends \core\task\adhoc_task {
                                                                      
    	 /**
      *  Run the tasks
@@ -43,7 +43,7 @@ class NEWMODULE_adhoc extends \core\task\adhoc_task {
 		$trace = new \text_progress_trace();
 		$cd =  $this->get_custom_data();;
 		//$trace->output($cd->somedata)
-        $NEWMODULE->mod_NEWMODULE_dotask($trace);
+        $@@newmodule@@->mod_@@newmodule@@_dotask($trace);
 	}
 		
 }

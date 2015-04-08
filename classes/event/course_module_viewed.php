@@ -17,18 +17,18 @@
 /**
  * The mod_page course module viewed event.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_NEWMODULE\event;
+namespace mod_@@newmodule@@\event;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The mod_NEWMODULE course module viewed event class.
+ * The mod_@@newmodule@@ course module viewed event class.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @since      Moodle 2.7
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -41,7 +41,7 @@ class course_module_viewed extends \core\event\course_module_viewed {
     protected function init() {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
-        $this->data['objecttable'] = 'NEWMODULE';
+        $this->data['objecttable'] = '@@newmodule@@';
     }
 }
 

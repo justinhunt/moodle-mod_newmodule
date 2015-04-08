@@ -19,7 +19,7 @@
  * This file replaces the legacy STATEMENTS section in db/install.xml,
  * lib.php/modulename_install() post installation hook and partially defaults.php
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE <your@email.adress>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,7 +29,7 @@
  *
  * @see upgrade_plugins_modules()
  */
-function xmldb_NEWMODULE_install() {
+function xmldb_@@newmodule@@_install() {
 }
 
 /**
@@ -37,5 +37,5 @@ function xmldb_NEWMODULE_install() {
  *
  * @see upgrade_plugins_modules()
  */
-function xmldb_NEWMODULE_install_recovery() {
+function xmldb_@@newmodule@@_install_recovery() {
 }

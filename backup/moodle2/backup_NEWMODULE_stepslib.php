@@ -16,9 +16,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines all the backup steps that will be used by {@link backup_NEWMODULE_activity_task}
+ * Defines all the backup steps that will be used by {@link backup_@@newmodule@@_activity_task}
  *
- * @package     mod_NEWMODULE
+ * @package     mod_@@newmodule@@
  * @category    backup
  * @copyright   COPYRIGHTNOTICE
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,16 +26,16 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/NEWMODULE/lib.php');
+require_once($CFG->dirroot . '/mod/@@newmodule@@/lib.php');
 
 /**
  * Defines the complete webquest structure for backup, with file and id annotations
  *
  */
-class backup_NEWMODULE_activity_structure_step extends backup_activity_structure_step {
+class backup_@@newmodule@@_activity_structure_step extends backup_activity_structure_step {
 
     /**
-     * Defines the structure of the NEWMODULE element inside the webquest.xml file
+     * Defines the structure of the @@newmodule@@ element inside the webquest.xml file
      *
      * @return backup_nested_element
      */
@@ -48,8 +48,8 @@ class backup_NEWMODULE_activity_structure_step extends backup_activity_structure
         // XML nodes declaration - non-user data
         ////////////////////////////////////////////////////////////////////////
 
-        // root element describing NEWMODULE instance
-        $oneactivity = new backup_nested_element(MOD_NEWMODULE_NAME, array('id'), array(
+        // root element describing @@newmodule@@ instance
+        $oneactivity = new backup_nested_element(MOD_NEWMODULE_MODNAME, array('id'), array(
             'course','name','intro','introformat','someinstancesetting','gradeoptions','maxattempts','mingrade',
 			'timecreated','timemodified'
 			));
@@ -57,7 +57,7 @@ class backup_NEWMODULE_activity_structure_step extends backup_activity_structure
 		//attempts
         $attempts = new backup_nested_element('attempts');
         $attempt = new backup_nested_element('attempt', array('id'),array(
-			MOD_NEWMODULE_NAME ."id","course","userid","status","sessionscore","timecreated","timemodified"
+			MOD_NEWMODULE_MODNAME ."id","course","userid","status","sessionscore","timecreated","timemodified"
 		));
 
 		
@@ -73,7 +73,7 @@ class backup_NEWMODULE_activity_structure_step extends backup_activity_structure
         //sources if including user info
         if ($userinfo) {
 			$attempt->set_source_table(MOD_NEWMODULE_USERTABLE
-											array(MOD_NEWMODULE_NAME . 'id' => backup::VAR_PARENTID));
+											array(MOD_NEWMODULE_MODNAME . 'id' => backup::VAR_PARENTID));
         }
 
         // Define id annotations.

@@ -17,34 +17,34 @@
 
 
 /**
- * English strings for NEWMODULE
+ * English strings for @@newmodule@@
  *
  * You can have a rather longer description of the file as well,
  * if you like, and it can span multiple lines.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'NEWMODULE';
-$string['modulenameplural'] = 'NEWMODULEs';
-$string['modulename_help'] = 'NEWMODULE help';
-$string['NEWMODULEfieldset'] = 'Custom example fieldset';
-$string['NEWMODULEname'] = 'NEWMODULE name';
-$string['NEWMODULEname_help'] = 'This is the content of the help tooltip associated with the NEWMODULEname field. Markdown syntax is supported.';
-$string['NEWMODULE'] = 'NEWMODULE';
-$string['pluginadministration'] = 'NEWMODULE Administration';
-$string['pluginname'] = 'NEWMODULE Activity';
+$string['modulename'] = '@@newmodule@@';
+$string['modulenameplural'] = '@@newmodule@@s';
+$string['modulename_help'] = '@@newmodule@@ help';
+$string['@@newmodule@@fieldset'] = 'Custom example fieldset';
+$string['@@newmodule@@name'] = '@@newmodule@@ name';
+$string['@@newmodule@@name_help'] = 'This is the content of the help tooltip associated with the @@newmodule@@name field. Markdown syntax is supported.';
+$string['@@newmodule@@'] = '@@newmodule@@';
+$string['pluginadministration'] = '@@newmodule@@ Administration';
+$string['pluginname'] = '@@newmodule@@ Activity';
 $string['someadminsetting'] = 'Some Admin Setting';
 $string['someadminsetting_details'] = 'More info about Some Admin Setting';
 $string['someinstancesetting'] = 'Some Instance Setting';
 $string['someinstancesetting_details'] = 'More infor about Some Instance Setting';
-$string['NEWMODULEsettings'] = 'NEWMODULE settings';
-$string['NEWMODULE:addinstance'] = 'Add a new NEWMODULE';
-$string['NEWMODULE:view'] = 'View NEWMODULE';
+$string['@@newmodule@@settings'] = '@@newmodule@@ settings';
+$string['@@newmodule@@:addinstance'] = 'Add a new @@newmodule@@';
+$string['@@newmodule@@:view'] = 'View @@newmodule@@';
 $string['id']='ID';
 $string['name']='Name';
 $string['timecreated']='Time Created';

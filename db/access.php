@@ -16,7 +16,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Capability definitions for the NEWMODULE module
+ * Capability definitions for the @@newmodule@@ module
  *
  * The capabilities are loaded into the database table when the module is
  * installed or updated. Whenever the capability definitions are updated,
@@ -40,7 +40,7 @@
  *
  * The variable name for the capability definitions array is $capabilities
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -49,7 +49,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-	'mod/NEWMODULE:addinstance' => array(
+	'mod/@@newmodule@@:addinstance' => array(
 			'riskbitmask' => RISK_XSS,
 			'captype' => 'write',
 			'contextlevel' => CONTEXT_COURSE,
@@ -60,7 +60,7 @@ $capabilities = array(
 			'clonepermissionsfrom' => 'moodle/course:manageactivities'
 	),
 	
-	'mod/NEWMODULE:manage' => array(
+	'mod/@@newmodule@@:manage' => array(
 			'riskbitmask' => RISK_XSS,
 			'captype' => 'write',
 			'contextlevel' => CONTEXT_COURSE,
@@ -71,7 +71,7 @@ $capabilities = array(
 			'clonepermissionsfrom' => 'moodle/course:manageactivities'
 	),
 	
-	'mod/NEWMODULE:preview' => array(
+	'mod/@@newmodule@@:preview' => array(
 			'captype' => 'write',
 			'contextlevel' => CONTEXT_COURSE,
 			'archetypes' => array(
@@ -82,7 +82,7 @@ $capabilities = array(
 			'clonepermissionsfrom' => 'moodle/course:manageactivities'
 	),
 
-    'mod/NEWMODULE:view' => array(
+    'mod/@@newmodule@@:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'legacy' => array(
@@ -94,7 +94,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/NEWMODULE:submit' => array(
+    'mod/@@newmodule@@:submit' => array(
         'riskbitmask' => RISK_SPAM,
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,

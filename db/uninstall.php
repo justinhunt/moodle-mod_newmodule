@@ -18,7 +18,7 @@
 /**
  * @see uninstall_plugin()
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE <your@email.adress>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,6 +26,6 @@
 /**
  * Custom uninstallation procedure
  */
-function xmldb_NEWMODULE_uninstall() {
+function xmldb_@@newmodule@@_uninstall() {
     return true;
 }

@@ -16,20 +16,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   mod_NEWMODULE
+ * @package   mod_@@newmodule@@
  * @copyright 2014 Justin Hunt poodllsupport@gmail.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/NEWMODULE/backup/moodle2/restore_NEWMODULE_stepslib.php'); // Because it exists (must)
+require_once($CFG->dirroot . '/mod/@@newmodule@@/backup/moodle2/restore_@@newmodule@@_stepslib.php'); // Because it exists (must)
 
 /**
- * NEWMODULE restore task that provides all the settings and steps to perform one
+ * @@newmodule@@ restore task that provides all the settings and steps to perform one
  * complete restore of the activity
  */
-class restore_NEWMODULE_activity_task extends restore_activity_task {
+class restore_@@newmodule@@_activity_task extends restore_activity_task {
 
     /**
      * Define (add) particular settings this activity can have
@@ -43,7 +43,7 @@ class restore_NEWMODULE_activity_task extends restore_activity_task {
      */
     protected function define_my_steps() {
         // Choice only has one structure step
-        $this->add_step(new restore_NEWMODULE_activity_structure_step('NEWMODULE_structure', 'NEWMODULE.xml'));
+        $this->add_step(new restore_@@newmodule@@_activity_structure_step('@@newmodule@@_structure', '@@newmodule@@.xml'));
     }
 
     /**
@@ -53,8 +53,8 @@ class restore_NEWMODULE_activity_task extends restore_activity_task {
     static public function define_decode_contents() {
         $contents = array();
 
-        $contents[] = new restore_decode_content(MOD_NEWMODULE_NAME,
-                          array('intro'), MOD_NEWMODULE_NAME);
+        $contents[] = new restore_decode_content(MOD_NEWMODULE_MODNAME,
+                          array('intro'), MOD_NEWMODULE_MODNAME);
 
         return $contents;
     }
@@ -66,8 +66,8 @@ class restore_NEWMODULE_activity_task extends restore_activity_task {
     static public function define_decode_rules() {
         $rules = array();
 
-        $rules[] = new restore_decode_rule('NEWMODULEVIEWBYID', '/mod/NEWMODULE/view.php?id=$1', 'course_module');
-        $rules[] = new restore_decode_rule('NEWMODULEINDEX', '/mod/NEWMODULE/index.php?id=$1', 'course');
+        $rules[] = new restore_decode_rule('@@newmodule@@VIEWBYID', '/mod/@@newmodule@@/view.php?id=$1', 'course_module');
+        $rules[] = new restore_decode_rule('@@newmodule@@INDEX', '/mod/@@newmodule@@/index.php?id=$1', 'course');
 
         return $rules;
 
@@ -82,9 +82,9 @@ class restore_NEWMODULE_activity_task extends restore_activity_task {
     static public function define_restore_log_rules() {
         $rules = array();
 
-        $rules[] = new restore_log_rule(MOD_NEWMODULE_NAME, 'add', 'view.php?id={course_module}', '{'. MOD_NEWMODULE_TABLE .'}');
-        $rules[] = new restore_log_rule(MOD_NEWMODULE_NAME, 'update', 'view.php?id={course_module}', '{'. MOD_NEWMODULE_TABLE .'}');
-        $rules[] = new restore_log_rule(MOD_NEWMODULE_NAME, 'view', 'view.php?id={course_module}', '{'. MOD_NEWMODULE_TABLE .'}');
+        $rules[] = new restore_log_rule(MOD_NEWMODULE_MODNAME, 'add', 'view.php?id={course_module}', '{'. MOD_NEWMODULE_TABLE .'}');
+        $rules[] = new restore_log_rule(MOD_NEWMODULE_MODNAME, 'update', 'view.php?id={course_module}', '{'. MOD_NEWMODULE_TABLE .'}');
+        $rules[] = new restore_log_rule(MOD_NEWMODULE_MODNAME, 'view', 'view.php?id={course_module}', '{'. MOD_NEWMODULE_TABLE .'}');
 
         return $rules;
     }
@@ -102,7 +102,7 @@ class restore_NEWMODULE_activity_task extends restore_activity_task {
     static public function define_restore_log_rules_for_course() {
         $rules = array();
 
-        $rules[] = new restore_log_rule(MOD_NEWMODULE_NAME, 'view all', 'index.php?id={course}', null);
+        $rules[] = new restore_log_rule(MOD_NEWMODULE_MODNAME, 'view all', 'index.php?id={course}', null);
 
         return $rules;
     }

@@ -16,21 +16,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   mod_NEWMODULE
+ * @package   mod_@@newmodule@@
  * @copyright 2014 Justin Hunt poodllsupport@gmail.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
- require_once($CFG->dirroot . '/mod/NEWMODULE/lib.php');
+ require_once($CFG->dirroot . '/mod/@@newmodule@@/lib.php');
 
 /**
- * Define all the restore steps that will be used by the restore_NEWMODULE_activity_task
+ * Define all the restore steps that will be used by the restore_@@newmodule@@_activity_task
  */
 
 /**
- * Structure step to restore one NEWMODULE activity
+ * Structure step to restore one @@newmodule@@ activity
  */
-class restore_NEWMODULE_activity_structure_step extends restore_activity_structure_step {
+class restore_@@newmodule@@_activity_structure_step extends restore_activity_structure_step {
 
     protected function define_structure() {
 
@@ -42,8 +42,8 @@ class restore_NEWMODULE_activity_structure_step extends restore_activity_structu
         // XML interesting paths - non-user data
         ////////////////////////////////////////////////////////////////////////
 
-        // root element describing NEWMODULE instance
-        $oneactivity = new restore_path_element(MOD_NEWMODULE_NAME, '/activity/NEWMODULE');
+        // root element describing @@newmodule@@ instance
+        $oneactivity = new restore_path_element(MOD_NEWMODULE_MODNAME, '/activity/@@newmodule@@');
         $paths[] = $oneactivity;
 
 		
@@ -58,7 +58,7 @@ class restore_NEWMODULE_activity_structure_step extends restore_activity_structu
         ////////////////////////////////////////////////////////////////////////
 		//attempts
 		 $attempts= new restore_path_element(MOD_NEWMODULE_USERTABLE,
-                                            '/activity/NEWMODULE/attempts/attempt');
+                                            '/activity/@@newmodule@@/attempts/attempt');
 		$paths[] = $attempts;
 		 
 
@@ -67,7 +67,7 @@ class restore_NEWMODULE_activity_structure_step extends restore_activity_structu
         return $this->prepare_activity_structure($paths);
     }
 
-    protected function process_NEWMODULE($data) {
+    protected function process_@@newmodule@@($data) {
         global $DB;
 
         $data = (object)$data;
@@ -85,7 +85,7 @@ class restore_NEWMODULE_activity_structure_step extends restore_activity_structu
     }
 
 	
-	protected function process_NEWMODULE_attempts($data) {
+	protected function process_@@newmodule@@_attempts($data) {
         global $DB;
 
         $data = (object)$data;
@@ -94,7 +94,7 @@ class restore_NEWMODULE_activity_structure_step extends restore_activity_structu
         $data->timecreated = $this->apply_date_offset($data->timecreated);
 
 		
-        $data->{MOD_NEWMODULE_NAME . 'id'} = $this->get_new_parentid(MOD_NEWMODULE_NAME);
+        $data->{MOD_NEWMODULE_MODNAME . 'id'} = $this->get_new_parentid(MOD_NEWMODULE_MODNAME);
         $newitemid = $DB->insert_record(MOD_NEWMODULE_USERTABLE, $data);
        $this->set_mapping(MOD_NEWMODULE_USERTABLE, $oldid, $newitemid, false); // Mapping without files
     }
