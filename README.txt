@@ -19,4 +19,4 @@ Install as usual.
 Enjoy.
 
 Justin Hunt
-poodllsupport@gmail.com 
+poodllsupport@gmail.com

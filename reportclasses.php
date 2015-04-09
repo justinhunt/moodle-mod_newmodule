@@ -17,7 +17,7 @@
 /**
  *  Report Classes.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -33,11 +33,11 @@ defined('MOODLE_INTERNAL') || die();
  * fetch_formatted_fields: uses data prepared in process_raw_data to make each field in fields full of formatted data
  * The allusers report is the simplest example 
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-abstract class mod_NEWMODULE_base_report {
+abstract class mod_@@newmodule@@_base_report {
 
     protected $report="";
     protected $head=array();
@@ -146,7 +146,7 @@ abstract class mod_NEWMODULE_base_report {
 *
 *
 */
-class mod_NEWMODULE_basic_report extends  mod_NEWMODULE_base_report {
+class mod_@@newmodule@@_basic_report extends  mod_@@newmodule@@_base_report {
 	
 	protected $report="basic";
 	protected $fields = array('id','name','timecreated');	

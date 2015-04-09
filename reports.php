@@ -16,10 +16,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Reports for NEWMODULE
+ * Reports for @@newmodule@@
  *
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -59,7 +59,7 @@ if($CFG->version<2014051200){
 	add_to_log($course->id, MOD_NEWMODULE_MODNAME, 'reports', "reports.php?id={$cm->id}", $moduleinstance->name, $cm->id);
 }else{
 	// Trigger module viewed event.
-	$event = \mod_NEWMODULE\event\course_module_viewed::create(array(
+	$event = \mod_@@newmodule@@\event\course_module_viewed::create(array(
 	   'objectid' => $moduleinstance->id,
 	   'context' => $modulecontext
 	));
@@ -100,7 +100,7 @@ switch ($showreport){
 		return;
 
 	case 'basic':
-		$report = new mod_NEWMODULE_basic_report();
+		$report = new mod_@@newmodule@@_basic_report();
 		$formdata = new stdClass();
 		break;
 

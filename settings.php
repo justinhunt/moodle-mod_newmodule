@@ -16,22 +16,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * NEWMODULE module admin settings and defaults
+ * @@newmodule@@ module admin settings and defaults
  *
  * @package    mod
- * @subpackage NEWMODULE
+ * @subpackage @@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
-require_once($CFG->dirroot.'/mod/NEWMODULE/lib.php');
+require_once($CFG->dirroot.'/mod/@@newmodule@@/lib.php');
 
 if ($ADMIN->fulltree) {
 
 
 
-	  $settings->add(new admin_setting_configtext('mod_NEWMODULE/someadminsetting',
-        get_string('someadminsetting', 'NEWMODULE'), get_string('someadminsetting_details', MOD_NEWMODULE_LANG), 'default text', PARAM_TEXT));
+	  $settings->add(new admin_setting_configtext('mod_@@newmodule@@/someadminsetting',
+        get_string('someadminsetting', '@@newmodule@@'), get_string('someadminsetting_details', MOD_NEWMODULE_LANG), 'default text', PARAM_TEXT));
 
 }

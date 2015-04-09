@@ -21,12 +21,12 @@
  * You can have a rather longer description of the file as well,
  * if you like, and it can span multiple lines.
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/// Replace NEWMODULE with the name of your module and remove this line
+/// Replace @@newmodule@@ with the name of your module and remove this line
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
@@ -37,19 +37,19 @@ $course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
 
 require_course_login($course);
 
-add_to_log($course->id, 'NEWMODULE', 'view all', 'index.php?id='.$course->id, '');
+add_to_log($course->id, '@@newmodule@@', 'view all', 'index.php?id='.$course->id, '');
 
 $coursecontext = context_course::instance($course->id);
 
-$PAGE->set_url('/mod/NEWMODULE/index.php', array('id' => $id));
+$PAGE->set_url('/mod/@@newmodule@@/index.php', array('id' => $id));
 $PAGE->set_title(format_string($course->fullname));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($coursecontext);
 
 echo $OUTPUT->header();
 
-if (! $NEWMODULEs = get_all_instances_in_course('NEWMODULE', $course)) {
-    notice(get_string('noNEWMODULEs', 'NEWMODULE'), new moodle_url('/course/view.php', array('id' => $course->id)));
+if (! $@@newmodule@@s = get_all_instances_in_course('@@newmodule@@', $course)) {
+    notice(get_string('no@@newmodule@@s', '@@newmodule@@'), new moodle_url('/course/view.php', array('id' => $course->id)));
 }
 
 $table = new html_table();
@@ -64,25 +64,25 @@ if ($course->format == 'weeks') {
     $table->align = array('left', 'left', 'left');
 }
 
-foreach ($NEWMODULEs as $NEWMODULE) {
-    if (!$NEWMODULE->visible) {
+foreach ($@@newmodule@@s as $@@newmodule@@) {
+    if (!$@@newmodule@@->visible) {
         $link = html_writer::link(
-            new moodle_url('/mod/NEWMODULE/view.php', array('id' => $NEWMODULE->coursemodule)),
-            format_string($NEWMODULE->name, true),
+            new moodle_url('/mod/@@newmodule@@/view.php', array('id' => $@@newmodule@@->coursemodule)),
+            format_string($@@newmodule@@->name, true),
             array('class' => 'dimmed'));
     } else {
         $link = html_writer::link(
-            new moodle_url('/mod/NEWMODULE/view.php', array('id' => $NEWMODULE->coursemodule)),
-            format_string($NEWMODULE->name, true));
+            new moodle_url('/mod/@@newmodule@@/view.php', array('id' => $@@newmodule@@->coursemodule)),
+            format_string($@@newmodule@@->name, true));
     }
 
     if ($course->format == 'weeks' or $course->format == 'topics') {
-        $table->data[] = array($NEWMODULE->section, $link);
+        $table->data[] = array($@@newmodule@@->section, $link);
     } else {
         $table->data[] = array($link);
     }
 }
 
-echo $OUTPUT->heading(get_string('modulenameplural', 'NEWMODULE'), 2);
+echo $OUTPUT->heading(get_string('modulenameplural', '@@newmodule@@'), 2);
 echo html_writer::table($table);
 echo $OUTPUT->footer();

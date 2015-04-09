@@ -20,11 +20,11 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * A custom renderer class that extends the plugin_renderer_base.
  *
- * @package mod_NEWMODULE
+ * @package mod_@@newmodule@@
  * @copyright COPYRIGHTNOTICE
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_NEWMODULE_renderer extends plugin_renderer_base {
+class mod_@@newmodule@@_renderer extends plugin_renderer_base {
 
 
 
@@ -55,12 +55,12 @@ class mod_NEWMODULE_renderer extends plugin_renderer_base {
         $this->page->set_heading($this->page->course->fullname);
         $output = $this->output->header();
 
-        if (has_capability('mod/NEWMODULE:manage', $context)) {
+        if (has_capability('mod/@@newmodule@@:manage', $context)) {
          //   $output .= $this->output->heading_with_help($activityname, 'overview', MOD_NEWMODULE_LANG);
 
             if (!empty($currenttab)) {
                 ob_start();
-                include($CFG->dirroot.'/mod/NEWMODULE/tabs.php');
+                include($CFG->dirroot.'/mod/@@newmodule@@/tabs.php');
                 $output .= ob_get_contents();
                 ob_end_clean();
             }
@@ -93,18 +93,18 @@ class mod_NEWMODULE_renderer extends plugin_renderer_base {
 	 /**
      *
      */
-	public function show_intro($NEWMODULE,$cm){
+	public function show_intro($@@newmodule@@,$cm){
 		$ret = "";
-		if (trim(strip_tags($NEWMODULE->intro))) {
+		if (trim(strip_tags($@@newmodule@@->intro))) {
 			echo $this->output->box_start('mod_introbox');
-			echo format_module_intro('NEWMODULE', $NEWMODULE, $cm->id);
+			echo format_module_intro('@@newmodule@@', $@@newmodule@@, $cm->id);
 			echo $this->output->box_end();
 		}
 	}
   
 }
 
-class mod_NEWMODULE_report_renderer extends plugin_renderer_base {
+class mod_@@newmodule@@_report_renderer extends plugin_renderer_base {
 
 
 	public function render_reportmenu($moduleinstance,$cm) {

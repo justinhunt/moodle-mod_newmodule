@@ -14,17 +14,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * JavaScript library for the NEWMODULE module.
+ * JavaScript library for the @@newmodule@@ module.
  *
  * @package    mod
- * @subpackage NEWMODULE
+ * @subpackage @@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-M.mod_NEWMODULE = M.mod_NEWMODULE || {};
+M.mod_@@newmodule@@ = M.mod_@@newmodule@@ || {};
 
-M.mod_NEWMODULE.helper = {
+M.mod_@@newmodule@@.helper = {
 	gY: null,
 
 
@@ -34,7 +34,7 @@ M.mod_NEWMODULE.helper = {
      */
     init: function(Y,opts) {
     	
-    	M.mod_NEWMODULE.helper.gY = Y;
+    	M.mod_@@newmodule@@.helper.gY = Y;
     	console.log(opts['someinstancesetting']);
     
     }

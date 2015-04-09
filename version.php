@@ -17,12 +17,12 @@
 
 
 /**
- * Defines the version of NEWMODULE
+ * Defines the version of @@newmodule@@
  *
  * This code fragment is called by moodle_needs_upgrading() and
  * /admin/index.php
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -33,4 +33,4 @@ $module->version   = 2014092301;               // If version == 0 then module wi
 //$module->version   = 2010032200;      // The current module version (Date: YYYYMMDDXX)
 $module->requires  = 2010031900;      // Requires this Moodle version
 $module->cron      = 0;               // Period for cron to check this module (secs)
-$module->component = 'mod_NEWMODULE'; // To check on upgrade, that module sits in correct place
+$module->component = 'mod_@@newmodule@@'; // To check on upgrade, that module sits in correct place

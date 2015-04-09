@@ -16,12 +16,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The main NEWMODULE configuration form
+ * The main @@newmodule@@ configuration form
  *
  * It uses the standard core Moodle formslib. For more info about them, please
  * visit: http://docs.moodle.org/en/Development:lib/formslib.php
  *
- * @package    mod_NEWMODULE
+ * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,12 +29,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once($CFG->dirroot.'/mod/NEWMODULE/lib.php');
+require_once($CFG->dirroot.'/mod/@@newmodule@@/lib.php');
 
 /**
  * Module instance settings form
  */
-class mod_NEWMODULE_mod_form extends moodleform_mod {
+class mod_@@newmodule@@_mod_form extends moodleform_mod {
 
     /**
      * Defines forms elements
@@ -48,7 +48,7 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field
-        $mform->addElement('text', 'name', get_string('NEWMODULEname', MOD_NEWMODULE_LANG), array('size'=>'64'));
+        $mform->addElement('text', 'name', get_string('@@newmodule@@name', MOD_NEWMODULE_LANG), array('size'=>'64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -56,15 +56,15 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
         }
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->addHelpButton('name', 'NEWMODULEname', MOD_NEWMODULE_LANG);
+        $mform->addHelpButton('name', '@@newmodule@@name', MOD_NEWMODULE_LANG);
 
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
 
         //-------------------------------------------------------------------------------
-        // Adding the rest of NEWMODULE settings, spreeading all them into this fieldset
+        // Adding the rest of @@newmodule@@ settings, spreeading all them into this fieldset
         // or adding more fieldsets ('header' elements) if needed for better logic
-        $mform->addElement('static', 'label1', 'NEWMODULEsettings', get_string('NEWMODULEsettings', MOD_NEWMODULE_LANG));
+        $mform->addElement('static', 'label1', '@@newmodule@@settings', get_string('@@newmodule@@settings', MOD_NEWMODULE_LANG));
         $mform->addElement('text', 'someinstancesetting', get_string('someinstancesetting', MOD_NEWMODULE_LANG), array('size'=>'64'));
         $mform->addRule('someinstancesetting', null, 'required', null, 'client');
         $mform->setType('someinstancesetting', PARAM_TEXT);
@@ -94,7 +94,7 @@ class mod_NEWMODULE_mod_form extends moodleform_mod {
     /**
      * This adds completion rules
 	 * The values here are just dummies. They don't work in this project until you implement some sort of grading
-	 * See lib.php NEWMODULE_get_completion_state()
+	 * See lib.php @@newmodule@@_get_completion_state()
      */
 	 function add_completion_rules() {
 		$mform =& $this->_form;  

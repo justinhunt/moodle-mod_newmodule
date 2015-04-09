@@ -1,10 +1,10 @@
 
-.mod_NEWMODULE_listbuttons input[type="submit"]{
+.mod_@@newmodule@@_listbuttons input[type="submit"]{
 	width: 400px;
 	/*float: left;*/
 }
 
-.mod_NEWMODULE_actionbuttons {
+.mod_@@newmodule@@_actionbuttons {
 	display: flex;
 	float: right;
 }

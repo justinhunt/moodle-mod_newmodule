@@ -20,7 +20,7 @@
 *
 * This file was adapted from the mod/lesson/tabs.php
 *
- * @package mod_NEWMODULE
+ * @package mod_@@newmodule@@
  * @copyright  2014 Justin Hunt  {@link http://poodll.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or late
 */
@@ -46,8 +46,8 @@ if (!isset($course)) {
 $tabs = $row = $inactive = $activated = array();
 
 
-$row[] = new tabobject('view', "$CFG->wwwroot/mod/NEWMODULE/view.php?id=$cm->id", get_string('view', MOD_NEWMODULE_LANG), get_string('preview', MOD_NEWMODULE_LANG, format_string($moduleinstance->name)));
-$row[] = new tabobject('reports', "$CFG->wwwroot/mod/NEWMODULE/reports.php?id=$cm->id", get_string('reports', MOD_NEWMODULE_LANG), get_string('viewreports', MOD_NEWMODULE_LANG));
+$row[] = new tabobject('view', "$CFG->wwwroot/mod/@@newmodule@@/view.php?id=$cm->id", get_string('view', MOD_NEWMODULE_LANG), get_string('preview', MOD_NEWMODULE_LANG, format_string($moduleinstance->name)));
+$row[] = new tabobject('reports', "$CFG->wwwroot/mod/@@newmodule@@/reports.php?id=$cm->id", get_string('reports', MOD_NEWMODULE_LANG), get_string('viewreports', MOD_NEWMODULE_LANG));
 
 $tabs[] = $row;
 
