@@ -71,6 +71,29 @@ $capabilities = array(
 			'clonepermissionsfrom' => 'moodle/course:manageactivities'
 	),
 	
+	'mod/@@newmodule@@:itemedit' => array(
+			'riskbitmask' => RISK_XSS,
+			'captype' => 'write',
+			'contextlevel' => CONTEXT_COURSE,
+			'archetypes' => array(
+					'editingteacher' => CAP_ALLOW,
+					'manager' => CAP_ALLOW
+			),
+			'clonepermissionsfrom' => 'moodle/course:manageactivities'
+	),
+	
+	'mod/@@newmodule@@:itemview' => array(
+			'riskbitmask' => RISK_XSS,
+			'captype' => 'write',
+			'contextlevel' => CONTEXT_COURSE,
+			'archetypes' => array(
+					'editingteacher' => CAP_ALLOW,
+					'teacher' => CAP_ALLOW,
+					'manager' => CAP_ALLOW
+			),
+			'clonepermissionsfrom' => 'moodle/course:manageactivities'
+	),
+	
 	'mod/@@newmodule@@:preview' => array(
 			'captype' => 'write',
 			'contextlevel' => CONTEXT_COURSE,
