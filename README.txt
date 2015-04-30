@@ -5,6 +5,7 @@ It contains admin and instance settings stubs, a renderer.php and a module.js . 
 
 To Use
 ===========
+Replace all instances of @@NEWMODULE@@ with your uppercase module name eg WIDGET
 Replace all instances of MOD_NEWMODULE_ with your module name eg MOD_WIDGET_
 Replace all instances of @@newmodule@@ with your module name eg widget
 Replace all instances of COPYRIGHTNOTICE with something like "2015 Justin Hunt".

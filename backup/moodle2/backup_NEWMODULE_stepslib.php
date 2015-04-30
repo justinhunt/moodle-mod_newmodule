@@ -72,7 +72,7 @@ class backup_@@newmodule@@_activity_structure_step extends backup_activity_struc
 
         //sources if including user info
         if ($userinfo) {
-			$attempt->set_source_table(MOD_NEWMODULE_USERTABLE
+			$attempt->set_source_table(MOD_NEWMODULE_USERTABLE,
 											array(MOD_NEWMODULE_MODNAME . 'id' => backup::VAR_PARENTID));
         }
 
