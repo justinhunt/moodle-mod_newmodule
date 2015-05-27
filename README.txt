@@ -5,13 +5,22 @@ It contains admin and instance settings stubs, a renderer.php and a module.js . 
 
 To Use
 ===========
-Replace all instances of @@NEWMODULE@@ with your uppercase module name eg WIDGET
-Replace all instances of MOD_NEWMODULE_ with your module name eg MOD_WIDGET_
-Replace all instances of @@newmodule@@ with your module name eg widget
-Replace all instances of COPYRIGHTNOTICE with something like "2015 Justin Hunt".
+i) Replace all instances of @@NEWMODULE@@ with your uppercase module name eg WIDGET
+
+ii) Replace all instances of MOD_NEWMODULE_ with your module frankenstyle component name eg MOD_WIDGET_
+(NB note the trailing underscore. Just to be safe, include that.)
+
+iii) Replace all instances of @@newmodule@@ with your lowercase module name eg widget
+
+iv) Replace all instances of COPYRIGHTNOTICE with something like "2015 Justin Hunt".
+
 It is recommended to use a search and replace tool from a text editor or a command line script to do this.
 Trying to do this manually is sure to lead to mistakes.
-Make sure the plugin folder name, name of the langage file in lang/en, files in the backup/moodle2 folder, and files in the classes/task folder are also changed.
+
+Make sure the plugin folder name, and the names of the files in these directories are also changed:
+lang/en
+backup/moodle2
+classes/task
 
 Copy the folder to your [Moodle Site Dir]/mod directory
 
