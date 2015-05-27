@@ -51,6 +51,7 @@ if ($id) {
     error('You must specify a course_module ID or an instance ID');
 }
 
+$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', array('id' => $cm->id));
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
@@ -71,7 +72,6 @@ if($CFG->version<2014051200){
 
 
 /// Set up the page header
-$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
