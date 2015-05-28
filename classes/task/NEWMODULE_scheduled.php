@@ -39,7 +39,7 @@ class @@newmodule@@_scheduled extends \core\task\scheduled_task {
 		
 	public function get_name() {
         // Shown in admin screens
-        return get_string('waitinglisttask', MOD_NEWMODULE_LANG);
+        return get_string('@@newmodule@@task', MOD_NEWMODULE_LANG);
     }
 	
 	 /**

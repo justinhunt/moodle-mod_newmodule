@@ -73,3 +73,4 @@ $string['gradelatest'] ='score of latest attempt';
 $string['gradeaverage'] ='average score of all attempts';
 $string['defaultsettings'] ='Default Settings';
 $string['exceededattempts'] ='You have completed the maximum {$a} attempts.';
+$string['@@newmodule@@task'] ='@@newmodule@@ Task';
