@@ -85,7 +85,7 @@ abstract class mod_@@newmodule@@_base_report {
 			
 			//return empty string if the timestamps are not both present.
 			if(!$seconds){return '';}
-			
+			$time=time();
 			return $this->fetch_time_difference($time, $time + $seconds);
 	}
 	
