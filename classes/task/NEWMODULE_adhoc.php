@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_page course module viewed event.
+ * A mod_@@newmodule@@ adhoc task
  *
  * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/mod/@@newmodule@@/lib.php');
 
 /**
- * The mod_@@newmodule@@ course module viewed event class.
+ * A mod_@@newmodule@@ adhoc task
  *
  * @package    mod_@@newmodule@@
  * @since      Moodle 2.7
@@ -43,7 +43,7 @@ class @@newmodule@@_adhoc extends \core\task\adhoc_task {
 		$trace = new \text_progress_trace();
 		$cd =  $this->get_custom_data();;
 		//$trace->output($cd->somedata)
-        $@@newmodule@@->mod_@@newmodule@@_dotask($trace);
+        	@@newmodule@@_dotask($trace);
 	}
 		
 }

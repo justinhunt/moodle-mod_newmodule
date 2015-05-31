@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_page course module viewed event.
+ * The mod_@@newmodule@@ scheduled task
  *
  * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/mod/@@newmodule@@/lib.php');
 
 /**
- * The mod_@@newmodule@@ course module viewed event class.
+ * The mod_@@newmodule@@ scheduled task.
  *
  * @package    mod_@@newmodule@@
  * @since      Moodle 2.7
@@ -47,7 +47,7 @@ class @@newmodule@@_scheduled extends \core\task\scheduled_task {
      */
 	 public function execute(){
 		$trace = new \text_progress_trace();
-        $@@newmodule@@->mod_@@newmodule@@_dotask($trace);
+        	@@newmodule@@_dotask($trace);
 	}
 
 }
