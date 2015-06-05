@@ -13,7 +13,7 @@ ii) Replace all instances of MOD_NEWMODULE_ with your module frankenstyle compon
 There are 141 of these.
 
 iii) Replace all instances of @@newmodule@@ with your lowercase module name eg widget
-There are 330 of these.
+There are 331 of these.
 
 iv) Replace all instances of COPYRIGHTNOTICE with something like "2015 Justin Hunt".
 There are 31 of these.
