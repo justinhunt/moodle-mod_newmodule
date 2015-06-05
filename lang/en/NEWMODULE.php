@@ -45,6 +45,7 @@ $string['someinstancesetting_details'] = 'More infor about Some Instance Setting
 $string['@@newmodule@@settings'] = '@@newmodule@@ settings';
 $string['@@newmodule@@:addinstance'] = 'Add a new @@newmodule@@';
 $string['@@newmodule@@:view'] = 'View @@newmodule@@';
+$string['@@newmodule@@:preview'] = 'Preview @@newmodule@@';
 $string['@@newmodule@@:itemview'] = 'View items';
 $string['@@newmodule@@:itemedit'] = 'Edit items';
 $string['id']='ID';
