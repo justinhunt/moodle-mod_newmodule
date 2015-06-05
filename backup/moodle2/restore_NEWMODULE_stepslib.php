@@ -85,7 +85,7 @@ class restore_@@newmodule@@_activity_structure_step extends restore_activity_str
     }
 
 	
-	protected function process_@@newmodule@@_attempts($data) {
+	protected function process_@@newmodule@@_attempt($data) {
         global $DB;
 
         $data = (object)$data;
