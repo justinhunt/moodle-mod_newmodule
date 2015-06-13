@@ -59,7 +59,11 @@ class mod_@@newmodule@@_mod_form extends moodleform_mod {
         $mform->addHelpButton('name', '@@newmodule@@name', MOD_NEWMODULE_LANG);
 
         // Adding the standard "intro" and "introformat" fields
-        $this->add_intro_editor();
+        if($CFG->version < 2015051100){
+        	$this->add_intro_editor();
+        }else{
+        	$this->standard_intro_elements();
+		}
 
         //-------------------------------------------------------------------------------
         // Adding the rest of @@newmodule@@ settings, spreeading all them into this fieldset
