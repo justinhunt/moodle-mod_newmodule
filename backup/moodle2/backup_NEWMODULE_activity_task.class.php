@@ -59,11 +59,11 @@ class backup_@@newmodule@@_activity_task extends backup_activity_task {
 
         // Link to the list of modules
         $search = "/(" . $base . "\/mod\/@@newmodule@@\/index.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@@@newmodule@@INDEX*$2@$', $content);
+        $content = preg_replace($search, '$@@@NEWMODULE@@INDEX*$2@$', $content);
 
         //Link to view.pphp by moduleid
         $search = "/(" . $base . "\/mod\/@@newmodule@@\/view.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@@@newmodule@@VIEWBYID*$2@$', $content);
+        $content= preg_replace($search, '$@@@NEWMODULE@@VIEWBYID*$2@$', $content);
 
         return $content;
     }
