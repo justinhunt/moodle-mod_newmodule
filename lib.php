@@ -72,7 +72,7 @@ function @@newmodule@@_supports($feature) {
 
 /**
  * Implementation of the function for printing the form elements that control
- * whether the course reset functionality affects the englishcentral.
+ * whether the course reset functionality affects the @@newmodule@@.
  *
  * @param $mform form passed by reference
  */
@@ -137,7 +137,7 @@ function @@newmodule@@_reset_userdata($data) {
 
         // remove all grades from gradebook
         if (empty($data->reset_gradebook_grades)) {
-            englishcentral_reset_gradebook($data->courseid);
+            @@newmodule@@_reset_gradebook($data->courseid);
         }
 
         $status[] = array('component'=>$componentstr, 'item'=>get_string('deletealluserdata', MOD_NEWMODULE_LANG), 'error'=>false);
@@ -287,7 +287,7 @@ function @@newmodule@@_get_user_grades($moduleinstance, $userid=0) {
     }
 
 	$idfield = 'a.' . MOD_NEWMODULE_MODNAME . 'id';
-    if ($moduleinstance->maxattempts==1 || $moduleinstance->gradeoptions == MOD_ENGLISHCENTRAL_GRADELATEST) {
+    if ($moduleinstance->maxattempts==1 || $moduleinstance->gradeoptions == MOD_@@NEWMODULE@@_GRADELATEST) {
 
         $sql = "SELECT u.id, u.id AS userid, a.sessionscore AS rawgrade
                   FROM {user} u,  {". MOD_NEWMODULE_USERTABLE ."} a
