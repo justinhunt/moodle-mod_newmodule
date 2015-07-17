@@ -50,7 +50,7 @@ class backup_@@newmodule@@_activity_structure_step extends backup_activity_struc
 
         // root element describing @@newmodule@@ instance
         $oneactivity = new backup_nested_element(MOD_NEWMODULE_MODNAME, array('id'), array(
-            'course','name','intro','introformat','someinstancesetting','gradeoptions','maxattempts','mingrade',
+            'course','name','intro','introformat','someinstancesetting','grade','gradeoptions','maxattempts','mingrade',
 			'timecreated','timemodified'
 			));
 		

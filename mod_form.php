@@ -77,6 +77,9 @@ class mod_@@newmodule@@_mod_form extends moodleform_mod {
         $attemptoptions = array(0 => get_string('unlimited', MOD_NEWMODULE_LANG),
                             1 => '1',2 => '2',3 => '3',4 => '4',5 => '5',);
         $mform->addElement('select', 'maxattempts', get_string('maxattempts', MOD_NEWMODULE_LANG), $attemptoptions);
+		
+		// Grade.
+        $this->standard_grading_coursemodule_elements();
         
         //grade options
         $gradeoptions = array(MOD_NEWMODULE_GRADEHIGHEST => get_string('gradehighest',MOD_NEWMODULE_LANG),
@@ -86,6 +89,8 @@ class mod_@@newmodule@@_mod_form extends moodleform_mod {
 							MOD_NEWMODULE_GRADENONE => get_string('gradenone', MOD_NEWMODULE_LANG));
         $mform->addElement('select', 'gradeoptions', get_string('gradeoptions', MOD_NEWMODULE_LANG), $gradeoptions);
 
+
+		
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
         $this->standard_coursemodule_elements();
