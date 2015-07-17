@@ -96,10 +96,11 @@ class mod_@@newmodule@@_renderer extends plugin_renderer_base {
 	public function show_intro($@@newmodule@@,$cm){
 		$ret = "";
 		if (trim(strip_tags($@@newmodule@@->intro))) {
-			echo $this->output->box_start('mod_introbox');
-			echo format_module_intro('@@newmodule@@', $@@newmodule@@, $cm->id);
-			echo $this->output->box_end();
+			$ret .= $this->output->box_start('mod_introbox');
+			$ret .= format_module_intro('@@newmodule@@', $@@newmodule@@, $cm->id);
+			$ret .= $this->output->box_end();
 		}
+		return $ret;
 	}
   
 }

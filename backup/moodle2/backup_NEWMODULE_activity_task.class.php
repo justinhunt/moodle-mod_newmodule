@@ -16,7 +16,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines {@link backup_englishcentral_activity_task} class
+ * Defines {@link backup_@@newmodule@@_activity_task} class
  *
  * @package     mod_@@newmodule@@
  * @category    backup
@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/mod/@@newmodule@@/backup/moodle2/backup_@@newmodule@@_stepslib.php');
 
 /**
- * Provides all the settings and steps to perform one complete backup of englishcentral activity
+ * Provides all the settings and steps to perform one complete backup of @@newmodule@@ activity
  */
 class backup_@@newmodule@@_activity_task extends backup_activity_task {
 
@@ -59,7 +59,7 @@ class backup_@@newmodule@@_activity_task extends backup_activity_task {
 
         // Link to the list of modules
         $search = "/(" . $base . "\/mod\/@@newmodule@@\/index.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@ENGLISHCENTRALINDEX*$2@$', $content);
+        $content = preg_replace($search, '$@@@newmodule@@INDEX*$2@$', $content);
 
         //Link to view.pphp by moduleid
         $search = "/(" . $base . "\/mod\/@@newmodule@@\/view.php\?id\=)([0-9]+)/";
