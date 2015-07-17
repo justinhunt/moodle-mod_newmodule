@@ -34,3 +34,6 @@ Enjoy.
 
 Justin Hunt
 poodllsupport@gmail.com
+
+NB
+By default the newtemplate supports grading, but since there is nothing to grade ... yet ... when you do update a gradable item, you will need to call: [modulename]_update_grades($moduleinstance, $userid_of_student);
