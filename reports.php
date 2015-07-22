@@ -34,9 +34,14 @@ $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // englishcentral instance ID - it should be named as the first character of the module
 $format = optional_param('format', 'html', PARAM_TEXT); //export format csv or html
 $showreport = optional_param('report', 'menu', PARAM_TEXT); // report type
-$questionid = optional_param('questionid', 0, PARAM_INT); // report type
-$userid = optional_param('userid', 0, PARAM_INT); // report type
-$attemptid = optional_param('attemptid', 0, PARAM_INT); // report type
+$userid = optional_param('userid', 0, PARAM_INT); // userid
+$attemptid = optional_param('attemptid', 0, PARAM_INT); // attemptid
+
+//paging details
+$paging = new stdClass();
+$paging->perpage = optional_param('perpage',40, PARAM_INT);
+$paging->pageno = optional_param('pageno',0, PARAM_INT);
+$paging->sort  = optional_param('sort','iddsc', PARAM_TEXT);
 
 
 if ($id) {
@@ -51,7 +56,8 @@ if ($id) {
     error('You must specify a course_module ID or an instance ID');
 }
 
-$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', array('id' => $cm->id));
+$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', 
+	array('id' => $cm->id,'format'=>$format,'report'=>$showreport,'userid'=>$userid,'attemptid'=>$attemptid));
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 
@@ -120,7 +126,7 @@ switch ($showreport){
 5) call $reportrenderer->render_section_html($sectiontitle, $report->name, $report->get_head, $rows, $report->fields);
 */
 
-$report->process_raw_data($formdata, $moduleinstance);
+$report->process_raw_data($formdata);
 $reportheading = $report->fetch_formatted_heading();
 
 switch($format){
@@ -131,9 +137,13 @@ switch($format){
 	default:
 		
 		$reportrows = $report->fetch_formatted_rows(true);
+		$allrowscount = $report->fetch_all_rows_count();
+		$pagingbar = $reportrenderer->show_paging_bar($allrowscount, $paging,$PAGE->url);
 		echo $renderer->header($moduleinstance, $cm, $mode, null, get_string('reports', MOD_NEWMODULE_LANG));
 		echo $extraheader;
+		echo $pagingbar;
 		echo $reportrenderer->render_section_html($reportheading, $report->fetch_name(), $report->fetch_head(), $reportrows, $report->fetch_fields());
+		echo $pagingbar;
 		echo $reportrenderer->show_reports_footer($moduleinstance,$cm,$formdata,$showreport);
 		echo $renderer->footer();
 }

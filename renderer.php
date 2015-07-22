@@ -229,6 +229,20 @@ class mod_@@newmodule@@_report_renderer extends plugin_renderer_base {
 		
 	}
 	
+	  /**
+       * Returns HTML to display a single paging bar to provide access to other pages  (usually in a search)
+       * @param int $totalcount The total number of entries available to be paged through
+       * @param stdclass $paging an object containting sort/perpage/pageno fields. Created in reports.php and grading.php
+       * @param string|moodle_url $baseurl url of the current page, the $pagevar parameter is added
+       * @return string the HTML to output.
+       */
+    function show_paging_bar($totalcount,$paging,$baseurl){
+		$pagevar="pageno";
+		//add paging params to url (NOT pageno)
+		$baseurl->params(array('perpage'=>$paging->perpage,'sort'=>$paging->sort));
+    	return $this->output->paging_bar($totalcount,$paging->pageno,$paging->perpage,$baseurl,$pagevar);
+    }
+	
 	function show_reports_footer($moduleinstance,$cm,$formdata,$showreport){
 		// print's a popup link to your custom page
 		$link = new moodle_url(MOD_NEWMODULE_URL . '/reports.php',array('report'=>'menu','id'=>$cm->id,'n'=>$moduleinstance->id));

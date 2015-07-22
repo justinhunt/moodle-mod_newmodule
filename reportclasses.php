@@ -46,7 +46,7 @@ abstract class mod_@@newmodule@@_base_report {
 	protected $dbcache=array();
 	
 	
-	abstract function process_raw_data($formdata);
+	abstract function process_raw_data($formdata,$paging=false);
 	abstract function fetch_formatted_heading();
 	
 	public function fetch_fields(){
@@ -105,11 +105,31 @@ abstract class mod_@@newmodule@@_base_report {
 			return $ret;
 	}
 	
-	public function fetch_formatted_rows($withlinks=true){
+	public function fetch_all_rows_count(){
+		return $this->rawdata ? count($this->rawdata) : 0;
+	}
+	
+	public function fetch_formatted_rows($withlinks=true,$paging=false){
 		$records = $this->rawdata;
 		$fields = $this->fields;
 		$returndata = array();
+		
+		//if we are paging, prepare start and end
+		if($paging){
+			$startrecord = ($paging->perpage * $paging->pageno) + 1;
+			$endrecord = $startrecord + $paging->perpage - 1;
+		}
+		$reccount = 0;
+		//loop through each record and prepare it for output
 		foreach($records as $record){
+			
+			//if paging, limit what we return
+			//this is a hack method, best to do it in process_raw_data really
+			$reccount++;
+			if($paging && ($reccount < $startrecord || $reccount > $endrecord)){
+				continue;
+			}
+			
 			$data = new stdClass();
 			foreach($fields as $field){
 				$data->{$field}=$this->fetch_formatted_field($field,$record,$withlinks);
@@ -188,7 +208,7 @@ class mod_@@newmodule@@_basic_report extends  mod_@@newmodule@@_base_report {
 		
 	}
 	
-	public function process_raw_data($formdata){
+	public function process_raw_data($formdata,$paging=false){
 		global $DB;
 		
 		//heading data
