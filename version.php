@@ -19,8 +19,6 @@
 /**
  * Defines the version of @@newmodule@@
  *
- * This code fragment is called by moodle_needs_upgrading() and
- * /admin/index.php
  *
  * @package    mod_@@newmodule@@
  * @copyright  COPYRIGHTNOTICE
@@ -29,8 +27,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2014092301;               // If version == 0 then module will not be installed
-//$module->version   = 2010032200;      // The current module version (Date: YYYYMMDDXX)
-$module->requires  = 2010031900;      // Requires this Moodle version
-$module->cron      = 0;               // Period for cron to check this module (secs)
-$module->component = 'mod_@@newmodule@@'; // To check on upgrade, that module sits in correct place
+$plugin->version   = 2014092301;               // If version == 0 then module will not be installed
+$plugin->requires  = 2010031900;      // Requires this Moodle version
+$plugin->cron      = 0;               // Period for cron to check this module (secs)
+$plugin->component = 'mod_@@newmodule@@'; // To check on upgrade, that module sits in correct place
