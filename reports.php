@@ -56,8 +56,12 @@ if ($id) {
     error('You must specify a course_module ID or an instance ID');
 }
 
-$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', 
-	array('id' => $cm->id,'format'=>$format,'report'=>$showreport,'userid'=>$userid,'attemptid'=>$attemptid));
+if($showreport=='menu'){
+	$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', array('id' => $cm->id));
+}else{
+	$PAGE->set_url(MOD_NEWMODULE_URL . '/reports.php', 
+		array('id' => $cm->id,'format'=>$format,'report'=>$showreport,'userid'=>$userid,'attemptid'=>$attemptid));
+}
 require_login($course, true, $cm);
 $modulecontext = context_module::instance($cm->id);
 

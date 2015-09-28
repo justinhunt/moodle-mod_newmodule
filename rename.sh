@@ -16,5 +16,7 @@ mv NEWMODULE/backup/moodle2/backup_NEWMODULE_activity_task.class.php NEWMODULE/b
 mv NEWMODULE/backup/moodle2/backup_NEWMODULE_stepslib.php NEWMODULE/backup/moodle2/backup_${LMODULENAME}_stepslib.php
 mv NEWMODULE/backup/moodle2/restore_NEWMODULE_activity_task.class.php NEWMODULE/backup/moodle2/restore_${LMODULENAME}_activity_task.class.php
 mv NEWMODULE/backup/moodle2/restore_NEWMODULE_stepslib.php NEWMODULE/backup/moodle2/restore_${LMODULENAME}_stepslib.php
+mv NEWMODULE/classes/task/NEWMODULE_adhoc.php NEWMODULE/classes/task/${LMODULENAME}_adhoc.php
+mv NEWMODULE/classes/task/NEWMODULE_scheduled.php NEWMODULE/classes/task/${LMODULENAME}_scheduled.php
 mv NEWMODULE $LMODULENAME
 echo "finished renaming NEWMODULE to ${LMODULENAME}"
