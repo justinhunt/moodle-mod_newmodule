@@ -1,5 +1,12 @@
 #!/bin/bash
 # Shell script to rename mod_newtemplate into something new
+# 1. move this script out of NEWMODULE so that its in same dir as NEWMODULE folder
+# 2. make it executable i.e chmod 755 rename.sh
+# 3. run it  ./rename.sh 
+# 4. you will be prompted for the name of your mod. keep it one word and all lower case
+# 5. you will be prompted for a copyright notice line, anything is ok eg 2015 Flash Gordon
+# 6. The NEWMODULE folder should have disappeared, replaced by your mod.
+# 7. If you have a .git folder in there, it will be all messed up. Remove it.
 # Author: poodll
 printf "enter new module short name, ie if mod_XXX enter XXX \n" 
 read MODULEENTRY
