@@ -657,7 +657,7 @@ function @@newmodule@@_pluginfile($course, $cm, $context, $filearea, array $args
  * @param stdClass $module
  * @param cm_info $cm
  */
-function @@newmodule@@_extend_navigation(navigation_node $navref, stdclass $course, stdclass $module, cm_info $cm) {
+function @@newmodule@@_extend_navigation(navigation_node $@@newmodule@@node, stdclass $course, stdclass $module, cm_info $cm) {
 }
 
 /**
