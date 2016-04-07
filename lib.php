@@ -335,8 +335,7 @@ function @@newmodule@@_get_completion_state($course,$cm,$userid,$type) {
 //this is called internally only 
 function @@newmodule@@_is_complete($course,$cm,$userid,$type) {
 	 global $CFG,$DB;
-	 
-	  global $CFG,$DB;
+
 
 	// Get module object
     if(!($moduleinstance=$DB->get_record(MOD_NEWMODULE_TABLE,array('id'=>$cm->instance)))) {
