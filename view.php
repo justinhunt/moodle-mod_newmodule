@@ -43,7 +43,7 @@ if ($id) {
     $course     = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
     $cm         = get_coursemodule_from_instance('@@newmodule@@', $moduleinstance->id, $course->id, false, MUST_EXIST);
 } else {
-    error('You must specify a course_module ID or an instance ID');
+    print_error(get_string('missingidandcmid',MOD_NEWMODULE_LANG));
 }
 
 $PAGE->set_url('/mod/@@newmodule@@/view.php', array('id' => $cm->id));
