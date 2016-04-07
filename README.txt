@@ -37,3 +37,9 @@ poodllsupport@gmail.com
 
 NB
 By default the newtemplate supports grading, but since there is nothing to grade ... yet ... when you do update a gradable item, you will need to call: [modulename]_update_grades($moduleinstance, $userid_of_student);
+
+NB 2
+If you don't want to manually rename, there is a rename.sh file in the NEWMODULE folder.
+i) move that one directory up, so that it has the same directory as the NEWMODULE folder itself.
+ii) make it exectuable like this ... chmod 755 rename.sh
+iii) run ./rename.sh and enter the name of the plugin that should make up the frankenstyle name as directed
