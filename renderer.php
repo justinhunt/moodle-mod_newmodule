@@ -187,7 +187,6 @@ class mod_@@newmodule@@_report_renderer extends plugin_renderer_base {
 			 echo $datarow . $newline;
 		}
         exit();
-        break;
 	}
 
 	public function render_section_html($sectiontitle, $report, $head, $rows, $fields) {
